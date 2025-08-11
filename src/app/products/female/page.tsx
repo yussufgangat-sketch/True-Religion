@@ -1,17 +1,32 @@
 import { products } from "@/data/products";
+import ProductCard from "@/components/ProductCard";
 
 export default function FemaleProductsPage() {
-  const female = products.filter((p) => p.category === "female");
+  const femaleProducts = products.filter(product => product.category === "female");
+
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {female.map((p) => (
-        <article key={p.id} className="border rounded p-4">
-          <h3 className="font-semibold">{p.name}</h3>
-          <p className="text-sm text-gray-600">{p.description}</p>
-          <p className="mt-2 font-medium">${p.price.toFixed(2)}</p>
-        </article>
-      ))}
-    </section>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="bg-black text-white py-16">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h1 className="text-5xl font-bold mb-4">WOMEN'S COLLECTION</h1>
+          <p className="text-xl text-gray-300">
+            Stylish denim, active wear, and fashion essentials for women
+          </p>
+        </div>
+      </section>
+
+      {/* Products Grid */}
+      <section className="py-16 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {femaleProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
 
