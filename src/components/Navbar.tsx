@@ -1,33 +1,51 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const pathname = usePathname();
+
   return (
-    <header className="w-full sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
-      <nav className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="font-bold text-xl tracking-wide">
-          True Religion
+    <nav className="flex items-center justify-between px-6 py-4 bg-white shadow">
+      <div className="flex items-center gap-6">
+        <Link
+          className={cn("hover:underline", { underline: pathname === "/" })}
+          href="/"
+        >
+          Home
         </Link>
-        <div className="flex items-center gap-6">
-          <Link className={cn("hover:underline", pathname === "/" && "underline")} href="/">
-            Home
-          </Link>
-          <Link className={cn("hover:underline", pathname?.startsWith("/products") && "underline")} href="/products">
-            Products
-          </Link>
-          <Link className={cn("hover:underline", pathname?.startsWith("/checkout") && "underline")} href="/checkout">
-            Checkout
-          </Link>
-          <Link className={cn("hover:underline", pathname?.startsWith("/login") && "underline")} href="/login">
-            Login
-          </Link>
-        </div>
-      </nav>
-    </header>
+
+        <Link
+          className={cn("hover:underline", {
+            underline: pathname?.startsWith("/products"),
+          })}
+          href="/products"
+        >
+          Products
+        </Link>
+
+        <Link
+          className={cn("hover:underline", {
+            underline: pathname?.startsWith("/about"),
+          })}
+          href="/about"
+        >
+          About
+        </Link>
+
+        <Link
+          className={cn("hover:underline", {
+            underline: pathname?.startsWith("/contact"),
+          })}
+          href="/contact"
+        >
+          Contact
+        </Link>
+      </div>
+
+      {/* Add any right-side navbar content here */}
+    </nav>
   );
 }
-
-
