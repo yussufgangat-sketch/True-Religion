@@ -9,7 +9,7 @@ export default function FemaleProductsPage() {
       {/* Hero Section */}
       <section className="bg-black text-white py-16">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-5xl font-bold mb-4">WOMEN'S COLLECTION</h1>
+          <h1 className="text-5xl font-bold mb-4">{"WOMEN'S COLLECTION"}</h1>
           <p className="text-xl text-gray-300">
             Stylish denim, active wear, and fashion essentials for women
           </p>

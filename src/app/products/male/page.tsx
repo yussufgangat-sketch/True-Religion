@@ -9,7 +9,7 @@ export default function MaleProductsPage() {
       {/* Hero Section */}
       <section className="bg-black text-white py-16">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-5xl font-bold mb-4">MEN'S COLLECTION</h1>
+          <h1 className="text-5xl font-bold mb-4">{"MEN'S COLLECTION"}</h1>
           <p className="text-xl text-gray-300">
             Premium denim, tees, and outerwear for the modern man
           </p>

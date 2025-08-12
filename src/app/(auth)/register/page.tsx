@@ -21,7 +21,7 @@ export default function RegisterPage() {
         await updateProfile(cred.user, { displayName: name });
       }
       window.location.href = "/";
-    } catch (err) {
+    } catch (_err) {
       setError("Could not create account");
     } finally {
       setLoading(false);

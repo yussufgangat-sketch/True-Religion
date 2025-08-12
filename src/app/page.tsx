@@ -62,7 +62,7 @@ export default function Home() {
               <div className="relative h-80 bg-gray-100 overflow-hidden">
                 <Image
                   src={featuredImages[1] || "/next.svg"}
-                  alt="Men's Collection"
+                  alt={"Men's Collection"}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -79,7 +79,7 @@ export default function Home() {
               <div className="relative h-80 bg-gray-100 overflow-hidden">
                 <Image
                   src={featuredImages[2] || "/next.svg"}
-                  alt="Women's Collection"
+                  alt={"Women's Collection"}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -170,7 +170,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-4">WANT TO BE A TRUE MEMBER?</h2>
           <p className="text-xl mb-8">
-            Subscribe to True Religion's mailing list for exclusive access to the latest trends, and special offers!
+            Subscribe to True Religion&apos;s mailing list for exclusive access to the latest trends, and special offers!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <input

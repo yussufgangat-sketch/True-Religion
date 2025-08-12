@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="text-center">
             <h3 className="text-2xl font-bold mb-4">Want to become a True member?</h3>
             <p className="text-gray-300 mb-6">
-              Subscribe to True Religion's mailing list for exclusive access to the latest trends, and special offers!
+              Subscribe to True Religion&apos;s mailing list for exclusive access to the latest trends, and special offers!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
