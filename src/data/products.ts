@@ -25,7 +25,7 @@ export const products: Product[] = [
   },
   {
     id: "m2",
-    name: "True Religion T-Shirt Relaxed Old Skool Semolina",
+    name: "True Religion T&#39;Shirt Relaxed Old Skool Semolina",
     description: "Comfortable relaxed fit t-shirt with classic logo.",
     price: 1099.50,
     originalPrice: 2199.00,
@@ -71,7 +71,7 @@ export const products: Product[] = [
   },
   {
     id: "f2",
-    name: "True Religion Raglan T-Shirt Ladies Baby Coal-Winter White",
+    name: "True Religion Raglan T&#39;Shirt Ladies Baby Coal-Winter White",
     description: "Soft raglan t-shirt with comfortable fit.",
     price: 749.50,
     originalPrice: 1499.00,
@@ -152,7 +152,7 @@ export const products: Product[] = [
   // Accessories
   {
     id: "a1",
-    name: "True Religion Brand T-Shirt Optic White",
+    name: "True Religion Brand T&#39;Shirt Optic White",
     description: "Classic brand t-shirt in optic white.",
     price: 899.50,
     originalPrice: 1799.00,
@@ -163,7 +163,7 @@ export const products: Product[] = [
   },
   {
     id: "a2",
-    name: "True Religion Anniversary Baby T-Shirt Jet Black",
+    name: "True Religion Anniversary Baby T&#39;Shirt Jet Black",
     description: "Anniversary edition baby t-shirt in jet black.",
     price: 649.50,
     originalPrice: 1299.00,

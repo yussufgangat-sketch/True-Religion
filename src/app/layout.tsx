@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "True Religion - Premium Denim & Apparel",
-  description: "Discover True Religion's premium denim and apparel collection. Shop the latest trends in men's and women's fashion.",
+  description: "Discover True Religion&apos;s premium denim and apparel collection. Shop the latest trends in men&apos;s and women&apos;s fashion.",
   keywords: "True Religion, denim, jeans, fashion, clothing, premium apparel",
 };
 
