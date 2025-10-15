@@ -27,23 +27,23 @@ export default function Home() {
   // Select high-quality hero images
   const heroImage = products.find(p => 
     p.image && p.category === 'male' && 
-    (p.productCategory.toLowerCase().includes('jean') || p.productCategory.toLowerCase().includes('tee'))
+    p.productCategory && (p.productCategory.toLowerCase().includes('jean') || p.productCategory.toLowerCase().includes('tee'))
   )?.image || products[0]?.image || '';
   
   // Get the best images for each category
   const mensImage = products.find(p => 
     p.category === 'male' && p.image && 
-    p.productCategory.toLowerCase().includes('jean')
+    p.productCategory && p.productCategory.toLowerCase().includes('jean')
   )?.image || products.find(p => p.category === 'male' && p.image)?.image || '';
   
   const womensImage = products.find(p => 
     p.category === 'female' && p.image && 
-    (p.productCategory.toLowerCase().includes('jean') || p.productCategory.toLowerCase().includes('tee'))
+    p.productCategory && (p.productCategory.toLowerCase().includes('jean') || p.productCategory.toLowerCase().includes('tee'))
   )?.image || products.find(p => p.category === 'female' && p.image)?.image || '';
   
   // Get featured products for the homepage
   const featuredProducts = products
-    .filter(p => p.image && (p.productCategory.toLowerCase().includes('jean') || p.productCategory.toLowerCase().includes('tee')))
+    .filter(p => p.image && p.productCategory && (p.productCategory.toLowerCase().includes('jean') || p.productCategory.toLowerCase().includes('tee')))
     .slice(0, 4);
   
   return (
@@ -227,11 +227,11 @@ export default function Home() {
                         <div className="flex items-center justify-between">
                           <div className="flex flex-col">
                             <span className="text-xs text-gray-600">Wholesale:</span>
-                            <span className="text-sm font-bold text-gray-900">R{product.wholesalePrice.toFixed(2)} ex VAT</span>
+                            <span className="text-sm font-bold text-gray-900">R{product.wholesalePrice?.toFixed(2) || 'N/A'} ex VAT</span>
                           </div>
                           <div className="flex flex-col text-right">
                             <span className="text-xs text-gray-600">Retail:</span>
-                            <span className="text-sm font-bold text-red-600">R{product.retailPrice.toFixed(2)}</span>
+                            <span className="text-sm font-bold text-red-600">R{product.retailPrice?.toFixed(2) || 'N/A'}</span>
                           </div>
                         </div>
                       ) : (
@@ -283,11 +283,11 @@ export default function Home() {
                         <div className="flex items-center justify-between">
                           <div className="flex flex-col">
                             <span className="text-xs text-gray-600">Wholesale:</span>
-                            <span className="text-sm font-bold text-gray-900">R{product.wholesalePrice.toFixed(2)} ex VAT</span>
+                            <span className="text-sm font-bold text-gray-900">R{product.wholesalePrice?.toFixed(2) || 'N/A'} ex VAT</span>
                           </div>
                           <div className="flex flex-col text-right">
                             <span className="text-xs text-gray-600">Retail:</span>
-                            <span className="text-sm font-bold text-red-600">R{product.retailPrice.toFixed(2)}</span>
+                            <span className="text-sm font-bold text-red-600">R{product.retailPrice?.toFixed(2) || 'N/A'}</span>
                           </div>
                         </div>
                       ) : (

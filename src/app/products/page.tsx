@@ -76,7 +76,7 @@ export default function ProductsPage() {
 
   // Group products by productCategory and sort within each group
   const groupedProducts = filteredProducts.reduce((acc, product) => {
-    const category = product.productCategory;
+    const category = product.productCategory || 'Other';
     if (!acc[category]) {
       acc[category] = [];
     }

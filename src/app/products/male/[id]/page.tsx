@@ -66,9 +66,9 @@ export default function MaleProductPage({ params }: { params: Promise<{ id: stri
     const cartItem = {
       id: product.id,
       name: product.name,
-      price: product.wholesalePrice, // This is used for calculations
-      wholesalePrice: product.wholesalePrice,
-      retailPrice: product.retailPrice,
+      price: product.wholesalePrice || product.price, // This is used for calculations
+      wholesalePrice: product.wholesalePrice || product.price,
+      retailPrice: product.retailPrice || product.price,
       size: 'TBD', // Temporary size - will be updated in cart
       quantity: 1,
       image: product.image || "",
@@ -211,11 +211,11 @@ export default function MaleProductPage({ params }: { params: Promise<{ id: stri
             <div className="space-y-3">
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                 <span className="text-sm font-medium text-gray-700">Wholesale Price:</span>
-                <span className="text-xl font-bold text-black">R{product.wholesalePrice.toFixed(2)} ex VAT</span>
+                <span className="text-xl font-bold text-black">R{product.wholesalePrice?.toFixed(2) || 'N/A'} ex VAT</span>
               </div>
               <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg border border-blue-200">
                 <span className="text-sm font-medium text-blue-700">Recommended Retail:</span>
-                <span className="text-xl font-bold text-blue-900">R{product.retailPrice.toFixed(2)}</span>
+                <span className="text-xl font-bold text-blue-900">R{product.retailPrice?.toFixed(2) || 'N/A'}</span>
               </div>
             </div>
 
