@@ -1,6 +1,8 @@
 'use client';
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
+import { getAuth, Auth } from 'firebase/auth';
+import { getFirestore, Firestore } from 'firebase/firestore';
+import { getStorage, FirebaseStorage } from 'firebase/storage';
 
 const cfg = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,11 +13,49 @@ const cfg = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Optional: helpful warning to avoid silent build fails
-if (!cfg.apiKey) {
-  // This only runs in the browser because of 'use client'
-  console.warn('Missing Firebase env vars. Check Vercel project settings.');
+// Debug: Log raw environment variables
+console.log('Raw Firebase Environment Variables:', {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+});
+
+// Check if we have valid Firebase configuration
+const hasValidConfig = cfg.apiKey && cfg.authDomain && cfg.projectId;
+
+// Debug: Log configuration status
+console.log('Firebase Config Status:', {
+  hasApiKey: !!cfg.apiKey,
+  hasAuthDomain: !!cfg.authDomain,
+  hasProjectId: !!cfg.projectId,
+  hasValidConfig,
+  fullConfig: cfg
+});
+
+if (!hasValidConfig) {
+  console.error('❌ Missing Firebase environment variables. Authentication will not work.');
+  console.error('Please check your Vercel environment variables configuration.');
+} else {
+  console.log('✅ Firebase configuration loaded successfully');
 }
 
-export const firebaseApp = getApps().length ? getApp() : initializeApp(cfg);
-export const firebaseAuth = getAuth(firebaseApp);
+// Initialize Firebase (will fail gracefully if config is invalid)
+let firebaseApp: FirebaseApp | null = null;
+let firebaseAuth: Auth | null = null;
+let firebaseStorage: FirebaseStorage | null = null;
+let db: Firestore | null = null;
+
+try {
+  if (hasValidConfig) {
+    firebaseApp = getApps().length ? getApp() : initializeApp(cfg);
+    firebaseAuth = getAuth(firebaseApp);
+    firebaseStorage = getStorage(firebaseApp);
+    db = getFirestore(firebaseApp);
+  } else {
+    console.warn('Firebase config invalid, auth will not work');
+  }
+} catch (error) {
+  console.error('Firebase initialization failed:', error);
+}
+
+export { firebaseApp, firebaseAuth, firebaseStorage, db };

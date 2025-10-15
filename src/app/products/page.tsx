@@ -1,27 +1,214 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
+import { ChevronDown } from "lucide-react";
 
 export default function ProductsPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [sortBy, setSortBy] = useState<string>("featured");
+
+  // Scroll position restoration
+  useEffect(() => {
+    const scrollPosition = sessionStorage.getItem('products-scroll-position');
+    if (scrollPosition) {
+      window.scrollTo(0, parseInt(scrollPosition));
+      sessionStorage.removeItem('products-scroll-position');
+    }
+  }, []);
+
+  // Save scroll position before leaving the page
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      sessionStorage.setItem('products-scroll-position', window.scrollY.toString());
+    };
+
+    const handleRouteChange = () => {
+      sessionStorage.setItem('products-scroll-position', window.scrollY.toString());
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    // Listen for navigation events
+    const originalPushState = history.pushState;
+    const originalReplaceState = history.replaceState;
+    
+    history.pushState = function(...args) {
+      handleRouteChange();
+      return originalPushState.apply(history, args);
+    };
+    
+    history.replaceState = function(...args) {
+      handleRouteChange();
+      return originalReplaceState.apply(history, args);
+    };
+
+    window.addEventListener('popstate', handleRouteChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handleRouteChange);
+      history.pushState = originalPushState;
+      history.replaceState = originalReplaceState;
+    };
+  }, []);
+
+  const categories = [
+    { id: "all", name: "All Products" },
+    { id: "male", name: "Men" },
+    { id: "female", name: "Women" },
+  ];
+
+  const sortOptions = [
+    { id: "featured", name: "Featured" },
+    { id: "price-low", name: "Price: Low to High" },
+    { id: "price-high", name: "Price: High to Low" },
+    { id: "name-asc", name: "Name: A to Z" },
+    { id: "name-desc", name: "Name: Z to A" },
+  ];
+
+  // Filter products by category (gender)
+  const filteredProducts = products.filter((product) => {
+    if (selectedCategory === "all") return true;
+    return product.category === selectedCategory;
+  });
+
+  // Group products by productCategory and sort within each group
+  const groupedProducts = filteredProducts.reduce((acc, product) => {
+    const category = product.productCategory;
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(product);
+    return acc;
+  }, {} as Record<string, typeof filteredProducts>);
+
+  // Sort products within each category
+  Object.keys(groupedProducts).forEach(category => {
+    groupedProducts[category].sort((a, b) => {
+    switch (sortBy) {
+      case "price-low":
+        return a.price - b.price;
+      case "price-high":
+        return b.price - a.price;
+      case "name-asc":
+        return a.name.localeCompare(b.name);
+      case "name-desc":
+        return b.name.localeCompare(a.name);
+      default:
+        return 0;
+    }
+  });
+  });
+
+  // Get total product count
+  const totalProducts = filteredProducts.length;
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-black text-white py-16">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-5xl font-bold mb-4">SHOP ALL PRODUCTS</h1>
-          <p className="text-xl text-gray-300">
-            Discover the latest True Religion collection
-          </p>
+      <section className="bg-white py-20">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4 tracking-tight">
+              AUTHENTIC
+            </h1>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-red-600 mb-6 tracking-tight">
+              AMERICAN DENIM
+            </h2>
+            <p className="text-lg text-gray-600 font-normal max-w-2xl mx-auto leading-relaxed">
+              Premium denim and authentic apparel crafted with American heritage.
+            </p>
+          </div>
+          
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4 tracking-tight">Browse Collections</h2>
+            <p className="text-lg text-gray-600 font-normal">Filter by category and sort your way</p>
+          </div>
+
+          {/* Category Filters and Sort */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-center gap-6">
+            {/* Category Filters */}
+            <div className="flex flex-wrap gap-3 justify-center">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`px-6 py-3 text-sm font-semibold rounded-full transition-all duration-300 ${
+                    selectedCategory === category.id
+                      ? "bg-black text-white"
+                      : "bg-white text-gray-700 border border-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+
+            {/* Sort Dropdown */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600 font-medium">Sort by:</span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="bg-white border border-gray-200 rounded-full px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              >
+                {sortOptions.map((option) => (
+                  <option key={option.id} value={option.id} className="text-gray-900 bg-white">
+                    {option.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
       </section>
 
+
       {/* Products Grid */}
-      <section className="py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {totalProducts > 0 ? (
+            <div className="space-y-16">
+              {Object.entries(groupedProducts).map(([categoryName, categoryProducts]) => (
+                <div key={categoryName}>
+                  {/* Category Header */}
+                  <div className="mb-10 text-center">
+                    <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4 tracking-tight">
+                      {categoryName}
+                    </h2>
+                    <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 rounded-full mx-auto"></div>
+                  </div>
+                  
+                  {/* Category Products */}
+                  <div
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                  >
+                    {categoryProducts.map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-24">
+              <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center shadow-lg">
+                <div className="text-6xl">🔍</div>
+            </div>
+              <h3 className="text-3xl font-black text-gray-900 mb-4">No Products Found</h3>
+              <p className="text-xl text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
+                We couldn't find any products in this category. Try exploring our other collections.
+              </p>
+              <button
+                onClick={() => setSelectedCategory("all")}
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-black to-gray-800 text-white font-bold rounded-2xl hover:from-gray-800 hover:to-black transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                View All Products
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </div>

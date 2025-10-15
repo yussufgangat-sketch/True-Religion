@@ -1,127 +1,169 @@
+"use client";
+
 import Link from "next/link";
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react";
+import Image from "next/image";
+import { Phone, Mail, Clock, Facebook, Instagram, Twitter } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Footer() {
+  const router = useRouter();
+  const { user } = useAuth();
+
+  // Handle navigation to product pages with authentication check
+  const handleProductNavigation = (e: React.MouseEvent, targetPath: string) => {
+    e.preventDefault();
+    if (user) {
+      // User is signed in, navigate to the page
+      router.push(targetPath);
+    } else {
+      // User is not signed in, redirect to login with intended destination
+      const encodedPath = encodeURIComponent(targetPath);
+      router.push(`/login?redirect=${encodedPath}`);
+    }
+  };
   return (
-    <footer className="bg-black text-white">
-      {/* Newsletter Section */}
-      <div className="border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold mb-4">Want to become a True member?</h3>
-            <p className="text-gray-300 mb-6">
-              Subscribe to True Religion&apos;s mailing list for exclusive access to the latest trends, and special offers!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
-              />
-              <button className="bg-white text-black px-8 py-3 font-semibold hover:bg-gray-100 transition-colors">
-                SUBSCRIBE
-              </button>
-            </div>
-            <p className="text-sm mt-4 text-gray-400">✨ SUBSCRIBE TO RECEIVE A 10% DISCOUNT ✨</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
+    <footer className="bg-gray-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* True Religion Brand */}
-          <div>
-            <h4 className="text-xl font-bold mb-4">True Religion</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
-              <li><Link href="/products" className="hover:text-white transition-colors">Search</Link></li>
-              <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Our Stores</Link></li>
-              <li><Link href="/wholesale" className="hover:text-white transition-colors">Wholesale Login</Link></li>
-            </ul>
-          </div>
-
-          {/* Contact Information */}
-          <div>
-            <h4 className="text-xl font-bold mb-4">Contact</h4>
-            <div className="space-y-3 text-gray-300">
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4" />
-                <a href="mailto:info@truereligionsa.co.za" className="hover:text-white transition-colors">
-                  info@truereligionsa.co.za
-                </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4" />
-                <a href="tel:+27630365115" className="hover:text-white transition-colors">
-                  +27 63 036 5115
-                </a>
-              </div>
-              <div className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 mt-1" />
-                <div>
-                  <p>83 Rivonia Road, Sandhurst</p>
-                  <p>Sandton Gauteng</p>
-                  <p>2196 South Africa</p>
-                </div>
-              </div>
+          {/* Brand Section */}
+          <div className="lg:col-span-1">
+            <div className="flex items-center space-x-3 mb-4">
+              <Image 
+                src="/true-religion-logo.png" 
+                alt="True Religion Logo" 
+                width={32} 
+                height={32} 
+                className="flex-shrink-0 object-contain" 
+              />
+              <span className="text-xl font-bold tracking-wider">TRUE RELIGION</span>
             </div>
-          </div>
-
-          {/* Social Media */}
-          <div>
-            <h4 className="text-xl font-bold mb-4">Follow Us</h4>
+            <p className="text-gray-400 mb-6">
+              Premium denim and apparel for the modern lifestyle. Discover authentic style with every stitch.
+            </p>
             <div className="flex space-x-4">
-              <a
-                href="https://facebook.com/truereligion"
-                className="p-2 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a
-                href="https://instagram.com/truereligion"
-                className="p-2 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a
-                href="https://twitter.com/truereligion"
-                className="p-2 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
             </div>
           </div>
 
-          {/* Policies */}
+          {/* Quick Links */}
           <div>
-            <h4 className="text-xl font-bold mb-4">Policies</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li><Link href="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link></li>
-              <li><Link href="/terms-of-service" className="hover:text-white transition-colors">Terms Of Service</Link></li>
-              <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/shipping" className="hover:text-white transition-colors">Shipping Policy</Link></li>
-              <li><Link href="/returns" className="hover:text-white transition-colors">Returns/Refunds Policy</Link></li>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/" className="text-gray-400 hover:text-white transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <button 
+                  onClick={(e) => handleProductNavigation(e, '/products')}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Shop All
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={(e) => handleProductNavigation(e, '/products/male')}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Men&apos;s Collection
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={(e) => handleProductNavigation(e, '/products/female')}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Women&apos;s Collection
+                </button>
+              </li>
+              <li>
+                <Link href="/cart" className="text-gray-400 hover:text-white transition-colors">
+                  Shopping Cart
+                </Link>
+              </li>
             </ul>
           </div>
-        </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
-            <p>Powered by Shopify © 2025, True Religion</p>
-            <div className="flex space-x-4 mt-4 md:mt-0">
-              <Link href="/sitemap" className="hover:text-white transition-colors">Sitemap</Link>
-              <Link href="/accessibility" className="hover:text-white transition-colors">Accessibility</Link>
+          {/* Customer Service */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Customer Service</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                  Contact Support
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="text-gray-400 hover:text-white transition-colors">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="/orders" className="text-gray-400 hover:text-white transition-colors">
+                  Track Order
+                </Link>
+              </li>
+              <li>
+                <Link href="/profile" className="text-gray-400 hover:text-white transition-colors">
+                  My Account
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Information */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <Phone className="h-4 w-4 text-blue-400" />
+                <span className="text-gray-400">079 298 8832</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Mail className="h-4 w-4 text-green-400" />
+                <span className="text-gray-400">yussuf@alcaponepremium.co.za</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Clock className="h-4 w-4 text-yellow-400" />
+                <div>
+                  <p className="text-gray-400">9:00 AM - 5:00 PM</p>
+                  <p className="text-gray-500 text-sm">Monday - Friday</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="border-t border-gray-800 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-gray-400 text-sm mb-4 md:mb-0">
+              © 2024 True Religion. All rights reserved.
+            </div>
+            <div className="flex space-x-6 text-sm">
+              <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                Terms of Service
+              </Link>
+              <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                Shipping Policy
+              </Link>
+              <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                Return Policy
+              </Link>
             </div>
           </div>
         </div>

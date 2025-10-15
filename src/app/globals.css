@@ -42,3 +42,106 @@ body {
   background: var(--brand-accent);
   color: white;
 }
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  /* Improve touch targets */
+  .btn-primary {
+    @apply min-h-[44px] px-6 py-3;
+  }
+  
+  /* Better mobile typography */
+  h1 {
+    @apply text-3xl leading-tight;
+  }
+  
+  h2 {
+    @apply text-2xl leading-tight;
+  }
+  
+  h3 {
+    @apply text-xl leading-tight;
+  }
+  
+  /* Mobile-friendly spacing */
+  .mobile-padding {
+    @apply px-4 py-6;
+  }
+  
+  /* Better mobile forms */
+  input, textarea, select {
+    @apply text-base; /* Prevents zoom on iOS */
+  }
+  
+  /* Mobile-friendly buttons */
+  button, .btn {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Mobile navigation improvements */
+  .mobile-nav {
+    @apply fixed inset-0 z-50 bg-white;
+  }
+  
+  /* Mobile product grid */
+  .mobile-grid {
+    @apply grid grid-cols-2 gap-4;
+  }
+  
+  /* Mobile hero section */
+  .mobile-hero {
+    @apply h-[60vh] min-h-[400px];
+  }
+  
+  /* Mobile-friendly images */
+  .mobile-image {
+    @apply w-full h-auto object-cover;
+  }
+  
+  /* Mobile cart improvements */
+  .mobile-cart-item {
+    @apply flex flex-col space-y-2 p-4 border-b;
+  }
+  
+  /* Mobile checkout improvements */
+  .mobile-checkout {
+    @apply space-y-6 p-4;
+  }
+  
+  /* Mobile product details */
+  .mobile-product-details {
+    @apply space-y-4 p-4;
+  }
+  
+  /* Mobile size selector */
+  .mobile-size-grid {
+    @apply grid grid-cols-3 gap-2;
+  }
+  
+  /* Mobile-friendly modals */
+  .mobile-modal {
+    @apply fixed inset-0 z-50 bg-black/50 flex items-end;
+  }
+  
+  .mobile-modal-content {
+    @apply bg-white rounded-t-lg w-full max-h-[80vh] overflow-y-auto;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .tablet-grid {
+    @apply grid grid-cols-3 gap-6;
+  }
+  
+  .tablet-hero {
+    @apply h-[70vh];
+  }
+}
+
+/* Desktop optimizations remain unchanged */
+@media (min-width: 1025px) {
+  .desktop-grid {
+    @apply grid grid-cols-4 gap-8;
+  }
+}
