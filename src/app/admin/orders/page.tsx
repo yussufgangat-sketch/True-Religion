@@ -144,7 +144,7 @@ export default function AdminOrdersPage() {
   };
 
   const getTotalRevenue = () => {
-    return orders.reduce((total, order) => total + order.total, 0);
+    return orders.reduce((total, order) => total + (order.total || 0), 0);
   };
 
   const getOrdersByStatus = (status: string) => {
@@ -334,7 +334,7 @@ export default function AdminOrdersPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-                <p className="text-2xl font-bold text-gray-900">R{getTotalRevenue().toFixed(2)}</p>
+                <p className="text-2xl font-bold text-gray-900">R{(getTotalRevenue() || 0).toFixed(2)}</p>
               </div>
             </div>
           </div>
@@ -412,7 +412,7 @@ export default function AdminOrdersPage() {
                     
                     <div className="flex items-center space-x-4">
                       <div className="text-right">
-                        <p className="text-lg font-bold text-gray-900">R{order.total.toFixed(2)}</p>
+                        <p className="text-lg font-bold text-gray-900">R{(order.total || 0).toFixed(2)}</p>
                         <p className="text-sm text-gray-600">{order.items.length} item{order.items.length !== 1 ? 's' : ''}</p>
                       </div>
                       
@@ -492,7 +492,7 @@ export default function AdminOrdersPage() {
                     </div>
                     <div className="flex items-center space-x-2">
                       <span className="text-sm font-medium text-gray-600">Total:</span>
-                      <span className="text-lg font-bold text-gray-900">R{selectedOrder.total.toFixed(2)}</span>
+                      <span className="text-lg font-bold text-gray-900">R{(selectedOrder.total || 0).toFixed(2)}</span>
                     </div>
                   </div>
                   <div className="flex space-x-2">
@@ -616,12 +616,12 @@ export default function AdminOrdersPage() {
                         <div className="mt-3 flex space-x-8 text-sm">
                           <div className="flex-1">
                             <p className="text-gray-600 mb-1">Wholesale Price (ex VAT)</p>
-                            <p className="font-semibold text-gray-900">R{item.wholesalePrice.toFixed(2)}</p>
+                            <p className="font-semibold text-gray-900">R{(item.wholesalePrice || 0).toFixed(2)}</p>
                           </div>
                           {item.retailPrice && (
                             <div className="flex-1">
                               <p className="text-gray-600 mb-1">Recommended Retail Price</p>
-                              <p className="font-semibold text-red-600">R{item.retailPrice.toFixed(2)}</p>
+                              <p className="font-semibold text-red-600">R{(item.retailPrice || 0).toFixed(2)}</p>
                             </div>
                           )}
                         </div>
@@ -642,16 +642,16 @@ export default function AdminOrdersPage() {
                 <div className="bg-white rounded-lg p-4 space-y-3">
                   <div className="flex justify-between items-center py-2">
                     <span className="text-gray-600">Subtotal ({selectedOrder.items.length} items):</span>
-                    <span className="font-semibold text-gray-900">R{selectedOrder.subtotal.toFixed(2)}</span>
+                    <span className="font-semibold text-gray-900">R{(selectedOrder.subtotal || 0).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center py-2">
                     <span className="text-gray-600">Shipping:</span>
-                    <span className="font-semibold text-gray-900">R{selectedOrder.shipping.toFixed(2)}</span>
+                    <span className="font-semibold text-gray-900">R{(selectedOrder.shipping || 0).toFixed(2)}</span>
                   </div>
                   <div className="border-t border-gray-200 pt-3">
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-bold text-gray-900">Total Amount:</span>
-                      <span className="text-xl font-bold text-gray-900">R{selectedOrder.total.toFixed(2)}</span>
+                      <span className="text-xl font-bold text-gray-900">R{(selectedOrder.total || 0).toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
